@@ -116,7 +116,7 @@ The core game features are implemented, and the game has passed manual GUI regre
 ![Player statistics](assests/statistics.png)
 
 ### Achievements
-![Achievements](assests/achievements.png)
+![Achievements](assests/achievement.png)
 
 ### Game Over
 ![Game Over](assests/game_over.png)
