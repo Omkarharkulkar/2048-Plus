@@ -106,21 +106,20 @@ The core game features are implemented, and the game has passed manual GUI regre
 ## Screenshots
 
 ### Gameplay
-![Gameplay screenshot](assets/gameplay1.png)
-![2048 Plus gameplay](assets/gameplay1.png)
-![2048 Plus gameplay](assets/gameplay2.png)
+![2048 Plus gameplay](assests/gameplay1.png)
+![2048 Plus gameplay](assests/gameplay2.png)
 
 ### Hint Feature
-![Hint feature](assets/hint.png)
+![Hint feature](assests/hint.png)
 
 ### Statistics
-![Player statistics](assets/statistics.png)
+![Player statistics](assests/statistics.png)
 
 ### Achievements
-![Achievements](assets/achievements.png)
+![Achievements](assests/achievements.png)
 
 ### Game Over
-![Game Over](assets/game_over.png)
+![Game Over](assests/game_over.png)
 
 ## Author
 
