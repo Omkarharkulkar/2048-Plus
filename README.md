@@ -106,6 +106,7 @@ The core game features are implemented, and the game has passed manual GUI regre
 ## Screenshots
 
 ### Gameplay
+![Gameplay screenshot](assets/gameplay1.png)
 ![2048 Plus gameplay](assets/gameplay1.png)
 ![2048 Plus gameplay](assets/gameplay2.png)
 
