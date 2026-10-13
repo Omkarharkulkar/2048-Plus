@@ -1,0 +1,25 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Spyder settings
+.spyproject/
+
+# Test and coverage artifacts
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Generated game data
+storage/savegame.json
+storage/statistics.json
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
