@@ -1,5 +1,7 @@
 # 2048 Plus — A Smart Puzzle Game
 
+![Python Tests](https://github.com/Omkarharkulkar/2048-Plus/actions/workflows/python-tests.yml/badge.svg)
+
 2048 Plus is a Python-based desktop puzzle game inspired by the classic 2048 game. It builds on the original concept with useful features like move hints, undo, save and resume, player statistics, and achievements.
 
 ## Overview
@@ -26,11 +28,15 @@ The project brings together game logic, a graphical user interface, data storage
 - JSON for storing game data and statistics
 - `unittest` for automated testing
 - Anaconda and Spyder for development
+- GitHub Actions for automated testing
 
 ## Project Structure
 
 ```text
 2048-Plus/
+├── .github/
+│   └── workflows/
+│       └── python-tests.yml
 ├── main.py
 ├── game/
 │   ├── __init__.py
@@ -69,17 +75,33 @@ sudo apt install python3-tk
 
 ### Running the Application
 
+**Using Spyder:**
+
 1. Open the project folder in Spyder.
 2. Set the project folder as the current working directory.
 3. Open `main.py`.
 4. Press **F5** to run the application.
 5. Use the keyboard controls and on-screen buttons to play.
 
+**Using the Command Line:**
+
+Open a terminal in the project root directory and run:
+
+```bash
+python main.py
+```
+
+On some systems, use:
+
+```bash
+python3 main.py
+```
+
 ## Running the Tests
 
 The project includes automated tests for the game engine, hint engine, statistics, and save manager.
 
-To run a test module in Spyder:
+**Using Spyder:**
 
 1. Open the required test file from the `tests` folder.
 2. Make sure the project root is set as the current working directory.
@@ -88,11 +110,28 @@ To run a test module in Spyder:
 
 Run each test module separately to check the main components of the application.
 
-Alternatively, from the project root, all test modules can be run together using:
+**Using the Command Line:**
+
+From the project root directory, run all test modules together:
 
 ```bash
 python -m unittest discover -s tests -v
 ```
+
+## GitHub Actions Workflow
+
+This project uses GitHub Actions to automate unit testing.
+
+The workflow is configured to run when code is pushed to the `main` branch or when a pull request targets `main`.
+
+It automatically:
+
+- Checks out the repository.
+- Sets up Python 3.12.
+- Runs the complete unit test suite.
+- Reports whether the tests passed or failed.
+
+The workflow file is located at `.github/workflows/python-tests.yml`.
 
 ## About the Hint System
 
@@ -112,6 +151,7 @@ The hint calculation does not change the actual game board, score, or undo histo
 - Unit testing and debugging
 - Modular project organization
 - Feature integration and regression testing
+- Basic CI/CD using GitHub Actions
 
 ## Future Improvements
 
@@ -125,31 +165,31 @@ There is room to expand the game with additional features, including:
 
 ## Project Status
 
-The core game features have been implemented. The application has also passed manual GUI regression checks and component-level automated tests.
+The core game features have been implemented. The application has also passed manual GUI regression checks and component-level automated tests. The GitHub Actions workflow has been configured and successfully executed.
 
 ## Screenshots
 
 ### Gameplay
 
-![2048 Plus gameplay](assests/gameplay1.png)
+![2048 Plus gameplay](assets/gameplay1.png)
 
-![2048 Plus gameplay](assests/gameplay2.png)
+![2048 Plus gameplay](assets/gameplay2.png)
 
 ### Hint Feature
 
-![Hint feature](assests/hint.png)
+![Hint feature](assets/hint.png)
 
 ### Statistics
 
-![Player statistics](assests/statistics.png)
+![Player statistics](assets/statistics.png)
 
 ### Achievements
 
-![Achievements](assests/achievement.png)
+![Achievements](assets/achievement.png)
 
 ### Game Over
 
-![Game Over](assests/game_over.png)
+![Game Over](assets/game_over.png)
 
 ## Author
 
