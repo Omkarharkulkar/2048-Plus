@@ -1,6 +1,5 @@
 
-
-from copy import deepcopy
+from copy import copy
 
 from game.engine import Game2048
 
@@ -61,7 +60,9 @@ class HintEngine:
         best_value = float("-inf")
 
         for direction in self.DIRECTIONS:
-            candidate = deepcopy(game)
+            candidate = copy(game)
+            candidate.board = [row[:] for row in game.board]
+            candidate.history = []
 
             changed = candidate.move(
                 direction.lower(),
