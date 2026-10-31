@@ -3,12 +3,10 @@ import tkinter as tk
 from tkinter import messagebox
 
 from game.engine import Game2048
-
+from game.hint_engine import HintEngine
+from game.statistics import PlayerStatistics
 from storage.save_manager import save_game, load_game
 
-from game.statistics import PlayerStatistics
-
-from game.hint_engine import HintEngine
 
 class GameWindow:
     """Tkinter interface for the 2048 game."""
@@ -39,6 +37,8 @@ class GameWindow:
 
         self.game = Game2048()
         self.stats = PlayerStatistics()
+        self.hint_engine = HintEngine()
+
         self._game_counted = False
         self.tile_labels = []
         self.previous_won = False
@@ -46,8 +46,6 @@ class GameWindow:
 
         self.build_interface()
         self.refresh_board()
-        
-        self.hint_engine = HintEngine()
 
         # Listen for arrow keys.
         self.root.bind("<Left>", lambda event: self.handle_move("left"))
@@ -154,7 +152,6 @@ class GameWindow:
             fg="#776E65",
         ).pack(side="left")
 
-        
         tk.Button(
             controls,
             text="Undo",
@@ -202,7 +199,7 @@ class GameWindow:
             padx=10,
             pady=7,
         ).pack(side="right")
-        
+
         tk.Button(
             controls,
             text="Statistics",
@@ -214,21 +211,18 @@ class GameWindow:
             padx=10,
             pady=7,
         ).pack(side="left", padx=5)
-        
+
         tk.Button(
-           controls,
-           text="Hint",
-           command=self.show_hint,
-           font=("Arial", 10, "bold"),
-           bg="#D9A441",
-           fg="white",
-           relief="flat",
-           padx=10,
-           pady=7,
+            controls,
+            text="Hint",
+            command=self.show_hint,
+            font=("Arial", 10, "bold"),
+            bg="#D9A441",
+            fg="white",
+            relief="flat",
+            padx=10,
+            pady=7,
         ).pack(side="left", padx=5)
-
-
-
 
     def refresh_board(self):
         """Update tile colors, values, score, and status."""
@@ -252,7 +246,6 @@ class GameWindow:
                         "#776E65" if value <= 4 else "#FFFFFF"
                     )
 
-                    # Use a smaller font for large tile values.
                     font_size = 22 if value < 1024 else 16
 
                     label.configure(
@@ -287,24 +280,26 @@ class GameWindow:
 
         if changed:
             if not self._game_counted:
-                 self.stats.record_game_started()
-                 self._game_counted = True
-                 
+                self.stats.record_game_started()
+                self._game_counted = True
+
             previous_achievements = set(
-               self.stats.get_summary()["unlocked_achievements"]
+                self.stats.get_summary()["unlocked_achievements"]
             )
 
             self.stats.record_move(
-               score=self.game.score,
-               board=self.game.board,
-               merges=self.game.last_move_merges,
+                score=self.game.score,
+                board=self.game.board,
+                merges=self.game.last_move_merges,
             )
 
             current_achievements = set(
-               self.stats.get_summary()["unlocked_achievements"]
+                self.stats.get_summary()["unlocked_achievements"]
             )
 
-            newly_unlocked = current_achievements - previous_achievements
+            newly_unlocked = (
+                current_achievements - previous_achievements
+            )
 
             self.refresh_board()
 
@@ -334,16 +329,18 @@ class GameWindow:
                 )
 
     def restart_game(self):
-        """Reset the engine and the interface."""
+        """Reset the engine and prepare a new game."""
 
         self.game.restart()
+        self._game_counted = False
         self.previous_won = False
         self.previous_game_over = False
+
         self.refresh_board()
-        
-    
+
     def undo_move(self):
         """Undo the last valid move."""
+
         if self.game.undo():
             self.refresh_board()
             self.status_label.configure(text="Last move undone.")
@@ -352,9 +349,12 @@ class GameWindow:
 
     def save_current_game(self):
         """Save the current game."""
+
         try:
             save_game(self.game)
-            self.status_label.configure(text="Game saved successfully.")
+            self.status_label.configure(
+                text="Game saved successfully."
+            )
         except OSError as error:
             messagebox.showerror(
                 "Save Error",
@@ -363,11 +363,13 @@ class GameWindow:
 
     def resume_game(self):
         """Restore the previously saved game."""
+
         try:
             if load_game(self.game):
                 self.previous_won = self.game.won
                 self.previous_game_over = self.game.game_over
                 self._game_counted = True
+
                 self.refresh_board()
                 self.status_label.configure(text="Saved game loaded.")
             else:
@@ -380,10 +382,10 @@ class GameWindow:
                 "Load Error",
                 f"Could not load the saved game:\n{error}",
             )
-            
-    
+
     def show_statistics(self):
         """Display the player's persistent statistics."""
+
         summary = self.stats.get_summary()
 
         window = tk.Toplevel(self.root)
@@ -406,7 +408,7 @@ class GameWindow:
             f"Total merges: {summary['total_merges']}\n"
             f"Achievements unlocked: "
             f"{len(summary['unlocked_achievements'])}"
-            )
+        )
 
         tk.Label(
             window,
@@ -442,36 +444,25 @@ class GameWindow:
             bg=self.BACKGROUND,
             fg="#776E65",
         ).pack(padx=24, pady=(0, 20), anchor="w")
-    
+
     def show_hint(self):
-      """Show a recommended move without changing the game."""
-      direction = self.hint_engine.suggest_move(self.game)
+        """Show a recommended move without changing the game."""
 
-      if direction is None:
-          messagebox.showinfo(
-               "Hint",
-               "No legal moves are available. Start a new game!",
-          )
-          return
+        direction = self.hint_engine.suggest_move(self.game)
 
-      messagebox.showinfo(
-        "Suggested Move",
-        f"Try moving {direction}.\n\n"
-        "This suggestion is based on the current board. "
-        "It will not move any tiles automatically.",
-    )
-      
-    def new_game(self):
-        """Start and count a new game."""
-        self.game.restart()
+        if direction is None:
+            messagebox.showinfo(
+                "Hint",
+                "No legal moves are available. Start a new game!",
+            )
+            return
 
-        self.stats.record_game_started()
-        self._game_counted = True
-
-        self.refresh_board()
-
-
-
+        messagebox.showinfo(
+            "Suggested Move",
+            f"Try moving {direction}.\n\n"
+            "This suggestion is based on the current board. "
+            "It will not move any tiles automatically.",
+        )
 
 
 def main():
@@ -482,4 +473,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
