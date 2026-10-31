@@ -61,12 +61,19 @@ The application generates the JSON files when game saves or statistics are store
 - Tkinter support
 - Anaconda with Spyder, or another compatible Python development environment
 
+On Ubuntu or Debian-based Linux systems, Tkinter can be installed with:
+
+```bash
+sudo apt install python3-tk
+```
+
 ### Running the Application
 
 1. Open the project folder in Spyder.
-2. Open `main.py`.
-3. Press **F5** to run the application.
-4. Use the keyboard controls and on-screen buttons to start playing.
+2. Set the project folder as the current working directory.
+3. Open `main.py`.
+4. Press **F5** to run the application.
+5. Use the keyboard controls and on-screen buttons to play.
 
 ## Running the Tests
 
@@ -75,10 +82,25 @@ The project includes automated tests for the game engine, hint engine, statistic
 To run a test module in Spyder:
 
 1. Open the required test file from the `tests` folder.
-2. Press **F5** to run it.
-3. Check the output to confirm that the tests pass.
+2. Make sure the project root is set as the current working directory.
+3. Press **F5** to run it.
+4. Check the output to confirm that the tests pass.
 
 Run each test module separately to check the main components of the application.
+
+Alternatively, from the project root, all test modules can be run together using:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+## About the Hint System
+
+The Hint System evaluates the four possible move directions and suggests the move with the best estimated result.
+
+It uses factors such as empty cells, the largest tile, neighboring tile values, and score. It is a simple one-move heuristic rather than an advanced AI search algorithm.
+
+The hint calculation does not change the actual game board, score, or undo history.
 
 ## Skills Demonstrated
 
