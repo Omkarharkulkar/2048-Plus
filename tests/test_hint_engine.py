@@ -38,6 +38,16 @@ class TestHintEngine(unittest.TestCase):
         self.assertEqual(self.game.board, original_board)
         self.assertEqual(self.game.score, original_score)
 
+    def test_hint_does_not_change_undo_history(self):
+        original_history = self.game.history.copy()
+
+        self.hints.suggest_move(self.game)
+
+        self.assertEqual(
+            self.game.history,
+            original_history,
+        )
+
     def test_repeated_hints_are_consistent(self):
         first = self.hints.suggest_move(self.game)
         second = self.hints.suggest_move(self.game)
@@ -61,4 +71,3 @@ class TestHintEngine(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
-
