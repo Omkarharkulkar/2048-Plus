@@ -1,0 +1,11 @@
+{
+    "version": 1,
+    "games_played": 4,
+    "best_score": 7132,
+    "highest_tile": 512,
+    "total_merges": 859,
+    "unlocked_achievements": [
+        "Getting Started",
+        "Tile Collector"
+    ]
+}
